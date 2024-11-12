@@ -29,7 +29,7 @@ You can utilize the Foursquare API with an API key that is generated via the dev
 
 1. Go to https://foursquare.com/developers/login. Create a new developer account if you don't have one.
 2. Create a new app in their developer portal.
-3. In the Project Settings, enter http://www.google.com in the Redirect URL field. Take note that your Client ID and Client Secret are listed just above.
+3. In the *Project Settings*, enter http://www.google.com in the Redirect URL field. Take note that your Client ID and Client Secret are listed just above.
 4. In your browser, navigate to the following URL:
 ```shell
 https://foursquare.com/oauth2/authenticate
@@ -66,10 +66,10 @@ You should see one or more `calendar-xxxx-xxxx.ics` files in your project folder
 1. Login to [AWS](https://aws.amazon.com/s3/) and click create a new S3 bucket. 
 2. Uncheck the "Block all public access" box and acknowledge that this will make the bucket public.
 3. We need to populate four different values in the `.env` file:
-  - `AWS_ACCESS_KEY_ID` - Find this by clicking on your username in the top right corner and selecting "Security Credentials". Scroll down to the "Access keys" section and create a new access key.
-  - `AWS_SECRET_ACCESS_KEY` - See above.
-  - `AWS_REGION` - Go to your S3 bucket and click into the "Properties" tab. Look for something with the following format: `us-west-1`.
-  - `S3_BUCKET_NAME` - This is the name of the bucket you created.
+  - **`AWS_ACCESS_KEY_ID`** - Find this by clicking on your username in the top right corner and selecting "Security Credentials". Scroll down to the "Access keys" section and create a new access key.
+  - **`AWS_SECRET_ACCESS_KEY`** - See above.
+  - **`AWS_REGION`** - Go to your S3 bucket and click into the "Properties" tab. Look for something with the following format: `us-west-1`.
+  - **`S3_BUCKET_NAME`** - This is the name of the bucket you created.
 4. Finish making the calendars publicly accessible by going to the bucket's Permissions tab and editing the policy to allow public read access. Paste in the following policy,make sure to update the bucket name:
 ```json
 {
@@ -99,16 +99,16 @@ We'll host our app on Render and schedule it to run daily. It's not a free host,
 2. Create a new project of type Cron Job.
 3. Connect your Github repo.
 4. On the project creation page, update the following fields:
-  - **Schedule**: `0 0 * * *`
-  - **Build command**: `npm install`
-  - **Command**: `npm run start`
+  - **Schedule**: 0 0 * * *
+  - **Build command**: npm install
+  - **Command**: npm run start
   - **Environment variables** - Click add from `.env` file and paste in your values.
-5. Click 'Deploy Cron Job'
+5. Click **Deploy Cron Job**
 
 View the logs to make sure the build was successful.
 
 ### 📍 Run the whole thing on the server
-Next, click Trigger Run in the top right to test the job without havin waiting for the scheduled run. Go back to the Logs tab and wait for the script logging to appear.
+Next, click **Trigger Run** in the top right to test the job without havin waiting for the scheduled run. Go back to the *Logs* tab and wait for the script logging to appear.
 
 Confirm that the files in the AWS S3 bucket were updated.
 
