@@ -51,7 +51,7 @@ curl -X POST "https://foursquare.com/oauth2/access_token" \
 8. The response should include your access token.
 9. Rename `.env.example` file to `.env` and populate `FOURSQUARE_OAUTH_TOKEN` with your access token.
 
-#### 🤞 Fetch check-in data and convert to iCalendar format
+#### 📍 Fetch check-in data and convert to iCalendar format
 
 1. Run `npm run fetch`. This should fetch the data and store in `checkins.json`.
 2. Run `npm run ical`. This converts the check-in data to iCalendar format.
@@ -82,7 +82,8 @@ You should see one or more `calendar-xxxx-xxxx.ics` files in your project folder
             "Resource": "arn:aws:s3:::BUCKET_NAME/*"
         }
     ]
-}```
+}
+```
 
 #### 🤞 Fetch check-in data and convert to iCalendar format
 
