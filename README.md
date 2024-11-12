@@ -2,6 +2,10 @@
     <img src="./pinback-logo.png" alt="Map pin with a clock embedded in it. Text in image reads: Pinback - Your check-ins in your calendar" width="640">
 </p>
 
+<p>
+    <img src="./calendar.png" alt="Calendar showing a week view with multiple events placed on each day" width="640">
+</p>
+
 This app does the following...
 1. Fetches check-in data from Swarm API
 2. Converts to iCalendar format
@@ -57,7 +61,7 @@ curl -X POST "https://foursquare.com/oauth2/access_token" \
 You should see one or more `calendar-xxxx-xxxx.ics` files in your project folder.
 
 > [!NOTE]
-> Rather than a single ICS file for all check-ins, we create multiple files for each 5-year period. This is to avoid hitting a possible 1MB file limit for subscribed calendars in Google Calendar -- the documentation on this is fuzzy.
+> Rather than a single ICS file for all check-ins, we create multiple files for each 5-year period. This is to avoid hitting a possible 1MB file limit for subscribed calendars in Google Calendar -- the documentation on this is fuzzy. You will need to subscribe to each of the files individually in your calendar app.
 
 ### 2. Save the calendar files to AWS S3 🪣 
 
@@ -92,7 +96,7 @@ S3_BUCKET_NAME=         # Your bucket name
 
 Run `npm run upload-all`. This will upload all of the calendar files to your S3 bucket.
 
-Confirm that the files are in the bucket via the AWS console.
+Confirm that the files are in the bucket via the AWS console. Go ahead and subscribe to the calendars in your calendar app of choice.
 
 ### 3. 🌄 Host this app and schedule it to run daily
 
