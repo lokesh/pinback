@@ -1,3 +1,7 @@
+<p>
+    <img src="./pinback-logo.png" alt="Map pin with a clock embedded in it" width="160">
+</p>
+
 # Pinback
 
 View your Swarm check-ins in your calendar app.
