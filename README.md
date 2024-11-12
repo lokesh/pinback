@@ -2,10 +2,6 @@
     <img src="./pinback-logo.png" alt="Map pin with a clock embedded in it. Text in image reads: Pinback - Your check-ins in your calendar" width="640">
 </p>
 
-# Pinback
-
-View your Swarm check-ins in your calendar app.
-
 This app does the following...
 1. Fetches check-in data from Swarm API
 2. Converts to iCalendar format
@@ -20,7 +16,8 @@ You'll need to do the following:
 2. Save the calendar files to AWS S3.
 3. Host this app and schedule it to run daily.
 
-If there are no major issues, the process should take 15-30 minutes.
+Expected setup time: 15-30 minutes
+Required cost: A few cents per month for hosting
 
 ### 1. Get a Foursquare Oauth token 🪙
 
@@ -65,13 +62,18 @@ You should see one or more `calendar-xxxx-xxxx.ics` files in your project folder
 ### 2. Save the calendar files to AWS S3 🪣 
 
 1. Login to [AWS](https://aws.amazon.com/s3/) and click create a new S3 bucket. 
-2. Uncheck the "Block all public access" box and acknowledge that this will make the bucket public.
-3. We need to populate four different values in the `.env` file:
-  - **`AWS_ACCESS_KEY_ID`** - Find this by clicking on your username in the top right corner and selecting "Security Credentials". Scroll down to the "Access keys" section and create a new access key.
-  - **`AWS_SECRET_ACCESS_KEY`** - See above.
-  - **`AWS_REGION`** - Go to your S3 bucket and click into the "Properties" tab. Look for something with the following format: `us-west-1`.
-  - **`S3_BUCKET_NAME`** - This is the name of the bucket you created.
-4. Finish making the calendars publicly accessible by going to the bucket's Permissions tab and editing the policy to allow public read access. Paste in the following policy,make sure to update the bucket name:
+2. **Important:** Uncheck "Block all public access" and acknowledge the security warning
+3. Add these values to your `.env` file:
+```ini
+AWS_ACCESS_KEY_ID=       # From Security Credentials > Access keys
+AWS_SECRET_ACCESS_KEY=   # From Security Credentials > Access keys
+AWS_REGION=             # Example: us-west-1
+S3_BUCKET_NAME=         # Your bucket name
+```
+4. Configure bucket permissions:
+   - Go to bucket's Permissions tab
+   - Edit bucket policy
+   - Paste and update the following:
 ```json
 {
     "Version": "2012-10-17",
@@ -94,27 +96,36 @@ Confirm that the files are in the bucket via the AWS console.
 
 ### 3. 🌄 Host this app and schedule it to run daily
 
-We'll host our app on Render and schedule it to run daily. It's not a free host, but for what we are doing, it should only cost a few cents.
+We'll use Render.com for hosting. Cost should be a few cents per month.
 
 1. Create an account on [Render](https://render.com/).
 2. Create a new project of type Cron Job.
 3. Connect your Github repo.
-4. On the project creation page, update the following fields:
-  - **Schedule**: 0 0 * * *
-  - **Build command**: npm install
-  - **Command**: npm run start
-  - **Environment variables** - Click add from `.env` file and paste in your values.
-5. Click **Deploy Cron Job**
-
-View the logs to make sure the build was successful.
-
-### 📍 Run the whole thing on the server
-Next, click **Trigger Run** in the top right to test the job without havin waiting for the scheduled run. Go back to the *Logs* tab and wait for the script logging to appear.
+4. Configure the job:
+   ```
+   Schedule: 0 0 * * *     # Runs daily at midnight UTC
+   Build: npm install
+   Command: npm run start
+   ```
+5. Add environment variables from your `.env` file
+6. Deploy and test with "Trigger Run"
 
 Confirm that the files in the AWS S3 bucket were updated.
 
-Finished!
+### Troubleshooting
+
+Common issues:
+- Calendar not updating? Most apps refresh only every 24-48 hours
+- Build failing? Check Render logs for details
+- Files not public? Double-check S3 bucket permissions
+- Rate limits? Ensure your Foursquare OAuth token is valid
 
 
-> [!NOTE]
-> Some calendaring apps only refresh their calendars once every day or two, so you might not see your latest check-ins immediately. To confirm that everything is working, verify the contents of the calendar files directly in the S3 bucket by downloading the ICS files and opening them in a text edtior.
+### Local Development
+
+To test locally:
+```bash
+npm run fetch    # Get check-ins
+npm run ical     # Convert to calendar format
+npm run upload   # Test S3 upload
+```
