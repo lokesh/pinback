@@ -133,3 +133,4 @@ npm run fetch    # Get check-ins
 npm run ical     # Convert to calendar format
 npm run upload   # Test S3 upload
 ```
+

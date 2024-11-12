@@ -1,6 +1,24 @@
 const fs = require('fs');
 const { getIcon } = require('./categories');
 
+/* Depending on what you specify in the config variables, the location for calendar events
+will be formatted differently:
+    * 1. Check-in is in MY_CITY (e.g. San Francisco):
+    *    - Leave location string empty to keep calendar entries clean for local events
+    * 
+    * 2. Check-in is in MY_COUNTRY but not in MY_CITY (e.g. within United States):
+    *    - Format: "City, State"
+    *    - Example: "Los Angeles, CA"
+    * 
+    * 3. Check-in is in a different country than MY_COUNTRY:
+    *    - Format: "City, Country"
+    *    - Example: "Paris, France"
+    */
+const CONFIG = {
+    MY_CITY: 'San Francisco',
+    MY_COUNTRY: 'United States'
+};
+
 // Read the checkins data
 const checkinsData = JSON.parse(fs.readFileSync('checkins.json', 'utf8'));
 
@@ -41,11 +59,11 @@ function generateICalContent(checkins) {
         const location = checkin.venue.location;
         let locationString = '';
         
-        if (location.city === 'San Francisco') {
-            // Leave empty for San Francisco
+        if (location.city === CONFIG.MY_CITY) {
+            // Leave empty for default city
             locationString = '';
-        } else if (location.country === 'United States') {
-            // City and state for US locations outside SF
+        } else if (location.country === CONFIG.MY_COUNTRY) {
+            // City and state for domestic locations outside default city
             locationString = [location.city, location.state]
                 .filter(Boolean)
                 .join(', ');
