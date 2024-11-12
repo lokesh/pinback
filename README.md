@@ -1,5 +1,5 @@
 <p>
-    <img src="./pinback-logo.png" alt="Map pin with a clock embedded in it" width="160">
+    <img src="./pinback-logo.png" alt="Map pin with a clock embedded in it. Text in image reads: Pinback - Your check-ins in your calendar" width="640">
 </p>
 
 # Pinback
