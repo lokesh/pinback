@@ -9,9 +9,6 @@ This app does the following...
 
 You then can subscribe to these hosted calendar files in your calendar app of choice. To keep data fresh, run it daily.
 
-> [!NOTE]
-> Google Calendar refreshes subscribed calendars approximately every 24 hours. You cannot force a refresh.
-
 ## How to run with your own data
 
 You'll need to do the following:
@@ -112,4 +109,8 @@ Next, click **Trigger Run** in the top right to test the job without havin waiti
 
 Confirm that the files in the AWS S3 bucket were updated.
 
-Finished! Remember that some calendaring apps only refresh their calendars once per day or two, so you might not see your latest check-ins immediately.
+Finished!
+
+
+> [!NOTE]
+> Some calendaring apps only refresh their calendars once every day or two, so you might not see your latest check-ins immediately. To confirm that everything is working, verify the contents of the calendar files directly in the S3 bucket by downloading the ICS files and opening them in a text edtior.
