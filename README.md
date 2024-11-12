@@ -21,7 +21,7 @@ You'll need to do the following:
 
 If there are no major issues, the process should take 15-30 minutes.
 
-### 1. 🪙 Get a Foursquare Oauth token
+### 1. Get a Foursquare Oauth token 🪙
 
 Before we get going, run `npm i` to install dependencies.
 
@@ -51,7 +51,7 @@ curl -X POST "https://foursquare.com/oauth2/access_token" \
 8. The response should include your access token.
 9. Rename `.env.example` file to `.env` and populate `FOURSQUARE_OAUTH_TOKEN` with your access token.
 
-#### 📍 Fetch check-in data and convert to iCalendar format
+#### Fetch check-in data and convert to iCalendar format 📅
 
 1. Run `npm run fetch`. This should fetch the data and store in `checkins.json`.
 2. Run `npm run ical`. This converts the check-in data to iCalendar format.
@@ -61,7 +61,7 @@ You should see one or more `calendar-xxxx-xxxx.ics` files in your project folder
 > [!NOTE]
 > Rather than a single ICS file for all check-ins, we create multiple files for each 5-year period. This is to avoid hitting a possible 1MB file limit for subscribed calendars in Google Calendar -- the documentation on this is fuzzy.
 
-### 2. 🪣 Save the calendar files to AWS S3
+### 2. Save the calendar files to AWS S3 🪣 
 
 1. Login to [AWS](https://aws.amazon.com/s3/) and click create a new S3 bucket. 
 2. Uncheck the "Block all public access" box and acknowledge that this will make the bucket public.
