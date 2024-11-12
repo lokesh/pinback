@@ -1,7 +1,3 @@
-## To-do
-- Remove calendar files from Github repo
-- Add photo of calendar
-
 # Pinback
 
 View your Swarm check-ins in your calendar app.
@@ -22,6 +18,8 @@ You'll need to do the following:
 1. Get a Foursquare Oauth token for your user.
 2. Save the calendar files to AWS S3.
 3. Host this app and schedule it to run daily.
+
+If there are no major issues, the process should take 15-30 minutes.
 
 ### 1. Get a Foursquare Oauth token
 
