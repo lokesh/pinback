@@ -21,7 +21,7 @@ You then can subscribe to these hosted calendar files in your calendar app of ch
 You'll need to do the following:
 1. Get a Foursquare Oauth token for your user.
 2. Save the calendar files to AWS S3.
-3. Host this app and schedule it to run daily. I'll walk through using Vercel.
+3. Host this app and schedule it to run daily.
 
 ### 1. Get a Foursquare Oauth token
 
@@ -72,6 +72,19 @@ You should see one or more `calendar-xxxx-xxxx.ics` files in your project folder
   - AWS_SECRET_ACCESS_KEY - See above.
   - AWS_REGION - Go to your S3 bucket and click into the "Properties" tab. Look for something with the following format: `us-west-1`.
   - S3_BUCKET_NAME - This is the name of the bucket you created.
+4. Finish making the calendars publicly accessible by going to the bucket's Permissions tab and editing the policy to allow public read access. Paste in the following policy,make sure to update the bucket name:
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::BUCKET_NAME/*"
+        }
+    ]
+}```
 
 #### 🤞 Fetch check-in data and convert to iCalendar format
 
@@ -81,20 +94,23 @@ Confirm that the files are in the bucket via the AWS console.
 
 ### 3. Host this app and schedule it to run daily
 
+We'll host our app on Render and schedule it to run daily.
 
-Code is hosted on heroku where it uses the scheduler to run `npm run start` daily at midnight. This task fetches new check-ins, converts to ics, and uploads to S3.
+1. Create an account on [Render](https://render.com/).
+2. Create a new project of type Cron Job.
+3. Connect your Github repo.
+4. On the project creation page, update the following fields:
+  - Schedule: `0 0 * * *
+  - Build command: `npm install`
+  - Command: `npm run start`
+  - Environment variables - Click add from `.env` file and paste in your values.
+5. Click 'Deploy Cron Job'
 
-- `fetch.js` - fetch check-in data from Foursquare API
-  - `npm run fetch` - fetches new check-ins and prepends to checkins.json
-  - `npm run fetch-all` - fetches all check-ins and overwrites checkins.json
-- `ical.js` - Converts data to iCalendar format
-  - `npm run ical` - converts checkins.json to calendar.ics
-- `upload.js` - Uploads data to AWS S3 bucket checkions-calendar
-  - `npm run upload` - uploads ics file for current 5-year period
-  - `npm run upload-all` - uploads all calendar ics files
-- `dedupe-json.js` - Removes duplicate check-ins. Was an issue when I had buggy code.
-- `categories.js` - Maps emoji to category. Used by ical.js
+View the logs to make sure the build was successful.
 
-### Data files
-- `checkins.json` - Raw check-in data
-- `calendar-xxxx-xxxx.ics` - iCalendar data for current 5-year period
+### 🤞 Run the whole thing on the server
+Next, click Trigger Run in the top right to test the job without havin waiting for the scheduled run. Go back to the Logs tab and wait for the script logging to appear.
+
+Confirm that the files in the AWS S3 bucket were updated.
+
+Finished! Remember that some calendaring apps only refresh their calendars once per day or two, so you might not see your latest check-ins immediately.
