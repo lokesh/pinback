@@ -25,7 +25,7 @@ async function uploadFile(startYear, endYear) {
 
         const fileContent = fs.readFileSync(filePath);
         const uploadParams = {
-            Bucket: 'checkins-calendar',
+            Bucket: process.env.S3_BUCKET_NAME,
             Key: fileName,
             Body: fileContent,
             ContentType: 'text/calendar'

@@ -7,8 +7,8 @@
     "fetch": "node ./fetch.js",
     "fetch-all": "node ./fetch.js --all",
     "ical": "node ./ical.js",
-    "upload": "node ./s3.js",
-    "upload-all": "node ./s3.js --all",
+    "upload": "node ./upload.js",
+    "upload-all": "node ./upload.js --all",
     "start": "npm run fetch && npm run ical && npm run upload",
     "deploy": "git push heroku"
   },
