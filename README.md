@@ -20,7 +20,7 @@ You'll need to do the following:
 2. Save the calendar files to AWS S3.
 3. Host this app and schedule it to run daily.
 
-Expected setup time: 15-30 minutes
+Expected setup time: 15-30 minutes<br /
 Required cost: A few cents per month for hosting
 
 ### 1. Get a Foursquare Oauth token 🪙
