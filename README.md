@@ -2,7 +2,7 @@
 
 View your Swarm check-ins in your calendar app.
 
-This app does the following:
+This app does the following...
 1. Fetches check-in data from Swarm API
 2. Converts to iCalendar format
 3. Uploads to AWS S3
@@ -66,10 +66,10 @@ You should see one or more `calendar-xxxx-xxxx.ics` files in your project folder
 1. Login to [AWS](https://aws.amazon.com/s3/) and click create a new S3 bucket. 
 2. Uncheck the "Block all public access" box and acknowledge that this will make the bucket public.
 3. We need to populate four different values in the `.env` file:
-  - AWS_ACCESS_KEY_ID - Find this by clicking on your username in the top right corner and selecting "Security Credentials". Scroll down to the "Access keys" section and create a new access key.
-  - AWS_SECRET_ACCESS_KEY - See above.
-  - AWS_REGION - Go to your S3 bucket and click into the "Properties" tab. Look for something with the following format: `us-west-1`.
-  - S3_BUCKET_NAME - This is the name of the bucket you created.
+  - `AWS_ACCESS_KEY_ID` - Find this by clicking on your username in the top right corner and selecting "Security Credentials". Scroll down to the "Access keys" section and create a new access key.
+  - `AWS_SECRET_ACCESS_KEY` - See above.
+  - `AWS_REGION` - Go to your S3 bucket and click into the "Properties" tab. Look for something with the following format: `us-west-1`.
+  - `S3_BUCKET_NAME` - This is the name of the bucket you created.
 4. Finish making the calendars publicly accessible by going to the bucket's Permissions tab and editing the policy to allow public read access. Paste in the following policy,make sure to update the bucket name:
 ```json
 {
@@ -93,16 +93,16 @@ Confirm that the files are in the bucket via the AWS console.
 
 ### 3. 🌄 Host this app and schedule it to run daily
 
-We'll host our app on Render and schedule it to run daily.
+We'll host our app on Render and schedule it to run daily. It's not a free host, but for what we are doing, it should only cost a few cents.
 
 1. Create an account on [Render](https://render.com/).
 2. Create a new project of type Cron Job.
 3. Connect your Github repo.
 4. On the project creation page, update the following fields:
-  - Schedule: `0 0 * * *
-  - Build command: `npm install`
-  - Command: `npm run start`
-  - Environment variables - Click add from `.env` file and paste in your values.
+  - **Schedule**: `0 0 * * *`
+  - **Build command**: `npm install`
+  - **Command**: `npm run start`
+  - **Environment variables** - Click add from `.env` file and paste in your values.
 5. Click 'Deploy Cron Job'
 
 View the logs to make sure the build was successful.
