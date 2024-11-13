@@ -133,3 +133,5 @@ dist
 
 checkins.json
 *.ics
+
+.DS_Store
