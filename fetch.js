@@ -23,13 +23,34 @@ const LIMIT = 250;
  * @returns {Promise<number>} Total number of checkins
  */
 async function fetchCheckinCount() {
+  console.log('[Foursquare] Fetching total checkin count');
+  
   const params = new URLSearchParams({
     ...AUTH_PARAMS,
   })
 
-  const resp = await fetch(`${CHECKINS_URL}?${new URLSearchParams(params)}`);
-  const json = await resp.json();
-  return json.response.checkins.count;
+  try {
+    const url = `${CHECKINS_URL}?${new URLSearchParams(params)}`;
+    console.log(`[Foursquare] Making request to: ${url}`);
+    
+    const resp = await fetch(url);
+    
+    if (!resp.ok) {
+      console.error(`[Foursquare] Error response: ${resp.status} ${resp.statusText}`);
+      throw new Error(`HTTP error! status: ${resp.status}`);
+    }
+    
+    const json = await resp.json();
+    console.log('[Foursquare] Successfully parsed response JSON');
+    
+    const count = json.response.checkins.count;
+    console.log(`[Foursquare] Total checkins count: ${count}`);
+    
+    return count;
+  } catch (error) {
+    console.error('[Foursquare] Error fetching checkin count:', error);
+    throw error;
+  }
 }
 
 /**
