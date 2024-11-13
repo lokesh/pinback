@@ -138,4 +138,5 @@ npm run upload   # Test S3 upload
 
 ## To-do
 - [ ] Remove hardcoded 2005 start year. Use first check-in date from API.
+- [ ] Incremental fetching of check-ins from Swarm API.
 - [ ] Ditch file saving. Upload directly to S3.

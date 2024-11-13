@@ -51,19 +51,37 @@ async function uploadCurrentPeriodFile() {
 }
 
 async function uploadAllFiles() {
-  
     const currentYear = new Date().getFullYear();
     const currentPeriodStart = Math.floor(currentYear / 5) * 5;
     const results = [];
 
-    // Start from 2005 and go up to current period
-    for (let startYear = 2005; startYear <= currentPeriodStart; startYear += 5) {
-      try {
-            const endYear = startYear + 4;
+    // Start from 20050 and go up to current period
+    for (let startYear = 2000; startYear <= currentPeriodStart; startYear += 5) {
+        const endYear = startYear + 4;
+        const fileName = `calendar-${startYear}-${endYear}.ics`;
+        const filePath = path.join(__dirname, fileName);
+
+        // Check if file exists before attempting upload
+        if (!fs.existsSync(filePath)) {
+            results.push({ 
+                startYear, 
+                endYear, 
+                error: `File ${fileName} does not exist`, 
+                success: false 
+            });
+            continue; // Skip to next iteration
+        }
+
+        try {
             const url = await uploadFile(startYear, endYear);
             results.push({ startYear, endYear, url, success: true });
         } catch (error) {
-            results.push({ startYear, endYear: startYear + 4, error: error.message, success: false });
+            results.push({ 
+                startYear, 
+                endYear, 
+                error: error.message, 
+                success: false 
+            });
         }
     }
 

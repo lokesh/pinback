@@ -9,8 +9,7 @@
     "ical": "node ./ical.js",
     "upload": "node ./upload.js",
     "upload-all": "node ./upload.js --all",
-    "start": "npm run fetch && npm run ical && npm run upload",
-    "deploy": "git push heroku"
+    "start": "npm run fetch && npm run ical && npm run upload"
   },
   "author": "",
   "license": "ISC",
