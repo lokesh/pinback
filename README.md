@@ -71,8 +71,8 @@ You should see one or more `calendar-xxxx-xxxx.ics` files in your project folder
 ```ini
 AWS_ACCESS_KEY_ID=       # From Security Credentials > Access keys
 AWS_SECRET_ACCESS_KEY=   # From Security Credentials > Access keys
-AWS_REGION=             # Example: us-west-1
-S3_BUCKET_NAME=         # Your bucket name
+AWS_REGION=              # Example: us-west-1
+S3_BUCKET_NAME=          # Your bucket name
 ```
 4. Configure bucket permissions:
    - Go to bucket's Permissions tab
