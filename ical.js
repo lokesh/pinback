@@ -1,5 +1,4 @@
-const fs = require('fs');
-const { getIcon } = require('./categories');
+import { getIcon } from './categories.js';
 
 /* Depending on what you specify in the config variables, the location for calendar events
 will be formatted differently:
@@ -20,7 +19,7 @@ const CONFIG = {
 };
 
 // Read the checkins data
-const checkinsData = JSON.parse(fs.readFileSync('checkins.json', 'utf8'));
+// const checkinsData = JSON.parse(fs.readFileSync('checkins.json', 'utf8'));
 
 // Helper function to format date to iCal format
 function formatDate(timestamp) {
@@ -110,14 +109,22 @@ function groupCheckinsByPeriod(checkins) {
     return periods;
 }
 
-// Generate and save the iCal files for each period
-const checkinsByPeriod = groupCheckinsByPeriod(checkinsData);
+// New main export function
+function generateCalendarData(checkinsData) {
+    const calendarFiles = [];
+    const checkinsByPeriod = groupCheckinsByPeriod(checkinsData);
 
-for (const [period, checkins] of Object.entries(checkinsByPeriod)) {
-    const icalContent = generateICalContent(checkins);
-    const filename = `calendar-${period}.ics`;
-    fs.writeFileSync(filename, icalContent);
-    console.log(`Generated ${filename} with ${checkins.length} checkins`);
+    for (const [period, checkins] of Object.entries(checkinsByPeriod)) {
+        const icalContent = generateICalContent(checkins);
+        const filename = `calendar-${period}.ics`;
+        
+        calendarFiles.push({
+            filename,
+            data: icalContent
+        });
+    }
+
+    return calendarFiles;
 }
 
-console.log('All iCal files have been generated successfully!');
+export { generateCalendarData };

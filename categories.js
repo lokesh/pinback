@@ -1,18 +1,3 @@
-const fs = require('fs');
-
-// Load the checkins data
-const checkinsData = JSON.parse(fs.readFileSync('checkins.json', 'utf8'));
-
-// Extract unique categories from the checkins data with safety checks
-const categories = [...new Set(checkinsData.map(checkin => {
-    // Check if venue and categories exist and have length
-    if (checkin?.venue?.categories?.length > 0) {
-        return checkin.venue.categories[0].name;
-    }
-    return null;
-}).filter(Boolean))];
-
-// Create an object of categories to icons
 const categoryIcons = {
     // Dining & Drinking
     'Restaurant': '🍽️',
@@ -146,10 +131,6 @@ const categoryIcons = {
     'default': '📍'
 };
 
-// Export both the categories array and the icon object
-module.exports = {
-    categories,
-    categoryIcons,
-    // Helper function to get icon for a category
-    getIcon: (category) => categoryIcons[category] || categoryIcons.default
-};
+// Export the objects and function
+export const getIcon = (category) => categoryIcons[category] || categoryIcons.default;
+export { categoryIcons };
