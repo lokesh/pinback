@@ -20,7 +20,7 @@ You'll need to do the following:
 2. Save the calendar files to AWS S3.
 3. Host this app and schedule it to run daily.
 
-Expected setup time: 15-30 minutes<br /
+Expected setup time: 15-30 minutes<br />
 Required cost: A few cents per month for hosting
 
 ### 1. Get a Foursquare Oauth token 🪙
@@ -29,8 +29,10 @@ Before we get going, run `npm i` to install dependencies.
 
 You can utilize the Foursquare API with an API key that is generated via the developer portal, but for certain data, including user check-ins, you'll need to use OAuth.
 
-1. Go to https://foursquare.com/developers/login. Create a new developer account if you don't have one.
-2. Create a new app in their developer portal.
+This process is cumbersome, but you only have to do it once.
+
+1. Go to https://foursquare.com/developers/. Create a new developer account if you don't have one.
+2. Create a new project in their developer portal.
 3. In the *Project Settings*, enter http://www.google.com in the Redirect URL field. Take note that your Client ID and Client Secret are listed just above.
 4. In your browser, navigate to the following URL:
 ```shell
@@ -40,7 +42,7 @@ https://foursquare.com/oauth2/authenticate
 &redirect_uri=YOUR_REDIRECT_URI
 ```
 5. Approve the app.
-6. You should be redirected to `http://www.google.com/?code=YOUR_CODE`. Copy the code.
+6. You'll be redirected to Google with a URL like `http://www.google.com/?code=YOUR_CODE`. Copy this code value - you'll need it in the next step. Important: If there's a `#` symbol and additional characters after the code, don't include those. The code should only contain letters and numbers.
 7. Run the following curl command to get the Oauth token:
 ```shell
 curl -X POST "https://foursquare.com/oauth2/access_token" \
@@ -69,15 +71,15 @@ You should see one or more `calendar-xxxx-xxxx.ics` files in your project folder
 2. **Important:** Uncheck "Block all public access" and acknowledge the security warning
 3. Add these values to your `.env` file:
 ```ini
-AWS_ACCESS_KEY_ID=       # From Security Credentials > Access keys
-AWS_SECRET_ACCESS_KEY=   # From Security Credentials > Access keys
+AWS_ACCESS_KEY_ID=       # From top-right menu > Security Credentials > Access keys
+AWS_SECRET_ACCESS_KEY=   # From top-right menu > Security Credentials > Access keys
 AWS_REGION=              # Example: us-west-1
 S3_BUCKET_NAME=          # Your bucket name
 ```
 4. Configure bucket permissions:
    - Go to bucket's Permissions tab
    - Edit bucket policy
-   - Paste and update the following:
+   - Paste and update the following, update :
 ```json
 {
     "Version": "2012-10-17",
@@ -134,3 +136,6 @@ npm run ical     # Convert to calendar format
 npm run upload   # Test S3 upload
 ```
 
+## To-do
+- [ ] Remove hardcoded 2005 start year. Use first check-in date from API.
+- [ ] Ditch file saving. Upload directly to S3.
