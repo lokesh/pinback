@@ -131,7 +131,5 @@ dist
 
 .private
 
-.env
-
 checkins.json
 *.ics

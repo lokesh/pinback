@@ -1,9 +1,9 @@
 <p>
-    <img src="./pinback-logo.png" alt="Map pin with a clock embedded in it. Text in image reads: Pinback - Your check-ins in your calendar" width="640">
+    <img src="./assets/pinback-logo.png" alt="Map pin with a clock embedded in it. Text in image reads: Pinback - Your check-ins in your calendar" width="640">
 </p>
 
 <p>
-    <img src="./calendar.png" alt="Calendar showing a week view with multiple events placed on each day" width="640">
+    <img src="./assets/calendar.png" alt="Calendar showing a week view with multiple events placed on each day" width="640">
 </p>
 
 This app does the following...
@@ -143,8 +143,3 @@ npm run fetch    # Get check-ins
 npm run ical     # Convert to calendar format
 npm run upload   # Test S3 upload
 ```
-
-## To-do
-- [ ] Remove hardcoded 2005 start year. Use first check-in date from API.
-- [ ] Incremental fetching of check-ins from Swarm API.
-- [ ] Ditch file saving. Upload directly to S3.

@@ -1,4 +1,3 @@
-import { fileURLToPath } from 'url';
 import { fetchCheckins } from './fetch.js';
 import { generateCalendarData } from './ical.js';
 import { uploadFiles } from './upload.js';
@@ -21,9 +20,4 @@ async function main() {
   }
 }
 
-// export { main };
-
-// // If running directly (not imported)
-// if (import.meta.url === fileURLToPath(process.argv[1])) {
-  main();
-// }
+main();

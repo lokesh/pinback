@@ -18,9 +18,6 @@ const CONFIG = {
     MY_COUNTRY: 'United States'
 };
 
-// Read the checkins data
-// const checkinsData = JSON.parse(fs.readFileSync('checkins.json', 'utf8'));
-
 // Helper function to format date to iCal format
 function formatDate(timestamp) {
     // Convert Unix timestamp (in seconds) to milliseconds

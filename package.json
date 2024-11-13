@@ -1,7 +1,7 @@
 {
   "name": "checkins-to-calendar",
   "version": "1.0.0",
-  "description": "1. import all check in data 2. convert JSON to ical format 3. create a script to upload that data to a hosted location for me to import 4. Automate??",
+  "description": "Check-ins in your calendar",
   "main": "foursquare-fetch.js",
   "scripts": {
     "start": "node ./index.js"
