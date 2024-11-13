@@ -4,22 +4,16 @@
   "description": "1. import all check in data 2. convert JSON to ical format 3. create a script to upload that data to a hosted location for me to import 4. Automate??",
   "main": "foursquare-fetch.js",
   "scripts": {
-    "fetch": "node ./fetch.js",
-    "fetch-all": "node ./fetch.js --all",
-    "ical": "node ./ical.js",
-    "upload": "node ./upload.js",
-    "upload-all": "node ./upload.js --all",
-    "start": "npm run fetch && npm run ical && npm run upload"
+    "start": "node ./index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.x.x",
-    "csv-writer": "^1.6.0",
-    "dotenv": "^16.4.5",
-    "ical": "^0.8.0"
+    "dotenv": "^16.4.5"
   },
   "engines": {
     "node": "^22.8.0"
-  }
+  },
+  "type": "module"
 }
