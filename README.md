@@ -100,32 +100,40 @@ Run `npm run upload-all`. This will upload all of the calendar files to your S3 
 
 Confirm that the files are in the bucket via the AWS console. Go ahead and subscribe to the calendars in your calendar app of choice.
 
-### 3. 🌄 Host this app and schedule it to run daily
+### 3. 🤖 Set up GitHub Actions to run daily
 
-We'll use Render.com for hosting. Cost should be a few cents per month.
+Instead of using a hosting provider, we'll use GitHub Actions to run the app daily for free.
 
-1. Create an account on [Render](https://render.com/).
-2. Create a new project of type Cron Job.
-3. Connect your Github repo.
-4. Configure the job:
-   ```
-   Schedule: 0 0 * * *     # Runs daily at midnight UTC
-   Build: npm install
-   Command: npm run start
-   ```
-5. Add environment variables from your `.env` file
-6. Deploy and test with "Trigger Run"
+1. Fork this repository to your GitHub account.
 
-Confirm that the files in the AWS S3 bucket were updated.
+2. Add your environment variables as repository secrets:
+   - Go to your repository's Settings
+   - Click on "Secrets and variables" → "Actions"
+   - Click "New repository secret"
+   - Add each of these secrets from your `.env` file:
+     - `AWS_ACCESS_KEY_ID`
+     - `AWS_SECRET_ACCESS_KEY`
+     - `AWS_REGION`
+     - `S3_BUCKET_NAME`
+     - `FOURSQUARE_OAUTH_TOKEN`
+     - `FOURSQUARE_API_VERSION`
+
+The GitHub Action is already configured in `.github/workflows/daily.yaml` to run daily at midnight UTC. You can view the runs under the "Actions" tab in your repository.
+
+To test the setup:
+1. Go to the "Actions" tab in your repository
+2. Select the "Daily Update" workflow
+3. Click "Run workflow"
+4. Check the run logs to ensure everything worked
+5. Verify that the files in your S3 bucket were updated
 
 ### Troubleshooting
 
 Common issues:
 - Calendar not updating? Most apps refresh only every 24-48 hours
-- Build failing? Check Render logs for details
+- GitHub Action failing? Check the Actions tab for error logs
 - Files not public? Double-check S3 bucket permissions
 - Rate limits? Ensure your Foursquare OAuth token is valid
-
 
 ### Local Development
 
