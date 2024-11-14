@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.x.x",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "ora": "^8.0.1"
   },
   "engines": {
     "node": "^22.8.0"

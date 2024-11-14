@@ -5,6 +5,6 @@ export default {
     },
     "calendar": {
         "eventDurationInMinutes": 60,
-        "defaultIcon": "📍"
+        "defaultEmoji": "📍"
     }
 }; 

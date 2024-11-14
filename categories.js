@@ -130,7 +130,7 @@ const categoryIcons = {
     'Embassy': '🏛️',
     
     // Catch-all
-    'default': config.calendar.eventDefaultEmoji
+    'default': config.calendar.defaultEmoji
 };
 
 // Export the objects and function

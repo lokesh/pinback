@@ -35,7 +35,7 @@ async function uploadFiles(files) {
             
             const fileUrl = `https://${uploadParams.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`;
             results.push({ filename: file.filename, url: fileUrl, success: true });
-            console.log(`⬆️ ${file.filename} uploaded to S3`);
+            console.log(`⬆️  Uploaded to S3: ${fileUrl}`);
         } catch (error) {
             results.push({ 
                 filename: file.filename, 

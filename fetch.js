@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import ora from 'ora';
 dotenv.config();
 
 // -------
@@ -38,7 +39,6 @@ async function fetchCheckinCount() {
  * @returns {Promise<Array>} Array of checkin objects from Foursquare
  */
 async function fetchCheckinBatch(offset = 0) {
-  console.log(`📍 Fetching checkins ${offset} - ${offset + LIMIT}`);
   const params = new URLSearchParams({
     ...AUTH_PARAMS,
     limit: LIMIT,
@@ -56,16 +56,17 @@ async function fetchCheckinBatch(offset = 0) {
  */
 async function fetchCheckins() {
   const checkinCount = await fetchCheckinCount();
-  console.log(`📍 ${checkinCount} checkins - fetching in batches of ${LIMIT}`);
+  console.log(`📍 Fetching ${checkinCount} checkins in batches of ${LIMIT}`);
   const fetchCount = Math.ceil(checkinCount / LIMIT);
   let checkins = [];
   
+  const spinner = ora(`Fetching`).start();
   for (let i = 0; i < fetchCount; i++) {
+    spinner.text = ` ${i * LIMIT} - ${i * LIMIT + LIMIT}`;
     let items = await fetchCheckinBatch(i * LIMIT);
     checkins.push(...items);
   }
-  
-  console.log(`📍 Fetched ${checkins.length} checkins`);
+  spinner.succeed(` Fetched ${checkins.length} checkins`);
   return checkins;
 }
 
