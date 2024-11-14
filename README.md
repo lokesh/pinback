@@ -6,6 +6,8 @@
     <img src="./assets/calendar.png" alt="Calendar showing a week view with multiple events placed on each day" width="640">
 </p>
 
+[![Build and Deploy](https://github.com/lokesh/pinback/actions/workflows/daily.yml/badge.svg)](https://github.com/lokesh/pinback/actions/workflows/daily.yml)
+
 This app does the following...
 1. Fetches your check-in data from Foursquare/Swarm API
 2. Converts to iCalendar format
@@ -13,6 +15,15 @@ This app does the following...
 4. Updates the calendar files regularly via GitHub Actions cronjob
 
 You then can subscribe to these hosted calendar files in your calendar app of choice.
+
+
+
+
+## Prerequisites
+- Node.js v22 or higher
+- A Foursquare/Swarm account with check-ins
+- AWS account (free tier works fine)
+- GitHub account
 
 ## How to run with your own data
 
@@ -50,7 +61,13 @@ curl -X POST "https://foursquare.com/oauth2/access_token" \
 8. The response should include your access token.
 9. Rename `.env.example` file to `.env` and populate `FOURSQUARE_OAUTH_TOKEN` with your access token.
 
-Open up `config.js` and update the location and calendar settings to your liking and then run `npm run start` to test the fetching and calendar generation.
+Open up `config.js` and update the settings to your liking and then run `npm run start` to test the fetching and calendar generation.
+
+**Configuration Options**
+- `myCity`: Your home city (used to simplify location display)
+- `myCountry`: Your home country (used for international vs domestic formatting)
+- `eventDurationInMinutes`: How long each check-in event should appear (default: 60)
+- `defaultIcon`: Fallback emoji for uncategorized venues (default: 📍)
 
 > [!NOTE]
 > Rather than a single ICS file for all check-ins, we create multiple files for each 5-year period. This is to avoid hitting a possible 1MB file limit for subscribed calendars in Google Calendar -- the documentation on this is fuzzy. You will need to subscribe to each of the files individually in your calendar app.
@@ -126,12 +143,6 @@ Common issues:
 
 ### To-do
 
-Add Progress Indicators
-The current console logs are basic. Add a progress bar for long operations:
-Ask
-Copy
-Apply
-const spinner = ora('Fetching check-ins...').start();
+- [ ] Use Ora progress indicator
+- [ ] Simplify OAuth flow with helper script
 
-
-Add S3 bucket accessibility checks
