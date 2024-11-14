@@ -40,7 +40,7 @@ function generateICalContent(checkins) {
     let icalContent = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
-        'PRODID:-//Lokesh Dhakar//private app//EN',
+        'PRODID:-//Pinback//private app//EN',
         'CALSCALE:GREGORIAN'
     ];
 
@@ -114,7 +114,7 @@ function generateCalendarData(checkinsData) {
     for (const [period, checkins] of Object.entries(checkinsByPeriod)) {
         const icalContent = generateICalContent(checkins);
         const filename = `calendar-${period}.ics`;
-        
+        console.log(`📅 Calendar generated: ${filename} with ${checkins.length} check-ins`);
         calendarFiles.push({
             filename,
             data: icalContent

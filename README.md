@@ -7,39 +7,34 @@
 </p>
 
 This app does the following...
-1. Fetches check-in data from Swarm API
+1. Fetches your check-in data from Foursquare/Swarm API
 2. Converts to iCalendar format
 3. Uploads to AWS S3
+4. Updates the calendar files regularly via GitHub Actions cronjob
 
-You then can subscribe to these hosted calendar files in your calendar app of choice. To keep data fresh, run it daily.
+You then can subscribe to these hosted calendar files in your calendar app of choice.
 
 ## How to run with your own data
 
-You'll need to do the following:
+We'll need to do the following:
 1. Get a Foursquare Oauth token for your user.
 2. Save the calendar files to AWS S3.
-3. Host this app and schedule it to run daily.
+3. Schedule the app to run regularly via GitHub Actions cronjob
 
-Expected setup time: 15-30 minutes<br />
-Required cost: A few cents per month for hosting
+Expected setup time: 15-30 minutes
 
 ### 1. Get a Foursquare Oauth token 🪙
 
 Before we get going, run `npm i` to install dependencies.
 
-You can utilize the Foursquare API with an API key that is generated via the developer portal, but for certain data, including user check-ins, you'll need to use OAuth.
-
-This process is cumbersome, but you only have to do it once.
+You can utilize the Foursquare API with an API key that is generated with a single-click via the developer portal, but for certain data, including user check-ins, you'll need to use OAuth. This process is cumbersome, but you only have to do it once.
 
 1. Go to https://foursquare.com/developers/. Create a new developer account if you don't have one.
 2. Create a new project in their developer portal.
 3. In the *Project Settings*, enter http://www.google.com in the Redirect URL field. Take note that your Client ID and Client Secret are listed just above.
 4. In your browser, navigate to the following URL:
 ```shell
-https://foursquare.com/oauth2/authenticate
-?client_id=YOUR_CLIENT_ID
-&response_type=code
-&redirect_uri=YOUR_REDIRECT_URI
+https://foursquare.com/oauth2/authenticate?client_id=YOUR_CLIENT_ID&response_type=code&redirect_uri=YOUR_REDIRECT_URI
 ```
 5. Approve the app.
 6. You'll be redirected to Google with a URL like `http://www.google.com/?code=YOUR_CODE`. Copy this code value - you'll need it in the next step. Important: If there's a `#` symbol and additional characters after the code, don't include those. The code should only contain letters and numbers.
@@ -55,12 +50,7 @@ curl -X POST "https://foursquare.com/oauth2/access_token" \
 8. The response should include your access token.
 9. Rename `.env.example` file to `.env` and populate `FOURSQUARE_OAUTH_TOKEN` with your access token.
 
-#### Fetch check-in data and convert to iCalendar format 📅
-
-1. Run `npm run fetch`. This should fetch the data and store in `checkins.json`.
-2. Run `npm run ical`. This converts the check-in data to iCalendar format.
-
-You should see one or more `calendar-xxxx-xxxx.ics` files in your project folder.
+Run `npm run start` to test the fetching and calendar generation.
 
 > [!NOTE]
 > Rather than a single ICS file for all check-ins, we create multiple files for each 5-year period. This is to avoid hitting a possible 1MB file limit for subscribed calendars in Google Calendar -- the documentation on this is fuzzy. You will need to subscribe to each of the files individually in your calendar app.
@@ -94,15 +84,13 @@ S3_BUCKET_NAME=          # Your bucket name
 }
 ```
 
-#### 📍 Fetch check-in data and convert to iCalendar format
-
-Run `npm run upload-all`. This will upload all of the calendar files to your S3 bucket.
+Run `npm run start` again, this time it should not only fetch the check-ins and generate the calendar files, but also upload them to S3.
 
 Confirm that the files are in the bucket via the AWS console. Go ahead and subscribe to the calendars in your calendar app of choice.
 
 ### 3. 🤖 Set up GitHub Actions to run daily
 
-Instead of using a hosting provider, we'll use GitHub Actions to run the app daily for free.
+Rather than running running this app manually we'll use GitHub Actions to run the app daily for us.
 
 1. Fork this repository to your GitHub account.
 
@@ -133,4 +121,3 @@ Common issues:
 - Calendar not updating? Most apps refresh only every 24-48 hours
 - GitHub Action failing? Check the Actions tab for error logs
 - Files not public? Double-check S3 bucket permissions
-- Rate limits? Ensure your Foursquare OAuth token is valid

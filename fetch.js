@@ -38,7 +38,7 @@ async function fetchCheckinCount() {
  * @returns {Promise<Array>} Array of checkin objects from Foursquare
  */
 async function fetchCheckinBatch(offset = 0) {
-  console.log(`   [Foursquare] Fetching checkins ${offset} - ${offset + LIMIT}`);
+  console.log(`📍 Fetching checkins ${offset} - ${offset + LIMIT}`);
   const params = new URLSearchParams({
     ...AUTH_PARAMS,
     limit: LIMIT,
@@ -55,9 +55,8 @@ async function fetchCheckinBatch(offset = 0) {
  * @returns {Promise<Array>} Array of all checkin objects
  */
 async function fetchCheckins() {
-  console.log('🕐 [Foursquare] Fetching all checkins');
-  
   const checkinCount = await fetchCheckinCount();
+  console.log(`📍 ${checkinCount} checkins - fetching in batches of ${LIMIT}`);
   const fetchCount = Math.ceil(checkinCount / LIMIT);
   let checkins = [];
   
@@ -66,7 +65,7 @@ async function fetchCheckins() {
     checkins.push(...items);
   }
   
-  console.log(`✅ [Foursquare] Fetched ${checkins.length} checkins`);
+  console.log(`✅ Fetched ${checkins.length} checkins`);
   return checkins;
 }
 
