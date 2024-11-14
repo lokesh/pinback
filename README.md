@@ -16,29 +16,6 @@ This app does the following...
 
 You then can subscribe to these hosted calendar files in your calendar app of choice.
 
-```mermaid
-graph LR
-F[Foursquare API] -->|OAuth Token| A[Your App]
-A -->|AWS Credentials| S3[AWS S3]
-S3 -->|Public URL| C[Calendar Apps]
-subgraph Your App
-FE[Fetch Module] -->|Check-in Data| IC[iCal Generator]
-IC -->|ICS Files| UP[Upload Module]
-end
-subgraph Environment Variables
-OT[FOURSQUARE_OAUTH_TOKEN]
-AK[AWS_ACCESS_KEY_ID]
-SK[AWS_SECRET_ACCESS_KEY]
-RG[AWS_REGION]
-BK[S3_BUCKET_NAME]
-end
-OT --> FE
-AK & SK & RG & BK --> UP
-style F fill:#f9f,stroke:#333
-style S3 fill:#ff9,stroke:#333
-style C fill:#9f9,stroke:#333
-```
-
 ## Prerequisites
 - Node.js v22 or higher
 - A Foursquare/Swarm account with check-ins
