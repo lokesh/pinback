@@ -43,7 +43,12 @@ function generateICalContent(checkins) {
 
     checkins.forEach(checkin => {
         const startDateTime = formatDate(checkin.createdAt);
-        const endDateTime = formatDate(checkin.createdAt + (config.calendar.eventDurationHours * 3600));
+        
+        // Convert minutes to seconds and ensure all values are numbers
+        const durationInSeconds = Number(config.calendar.eventDurationInMinutes) * 60;
+        const endTimestamp = Number(checkin.createdAt) + durationInSeconds;        
+        const endDateTime = formatDate(endTimestamp);
+
         const eventUID = generateUID();
         
         const primaryCategory = checkin.venue.categories[0]?.name || '';
@@ -111,7 +116,7 @@ function generateCalendarData(checkinsData) {
     for (const [period, checkins] of Object.entries(checkinsByPeriod)) {
         const icalContent = generateICalContent(checkins);
         const filename = `calendar-${period}.ics`;
-        console.log(`📅 Calendar generated: ${filename} with ${checkins.length} check-ins`);
+        console.log(`📅 ${filename} generated with ${checkins.length} check-ins`);
         calendarFiles.push({
             filename,
             data: icalContent

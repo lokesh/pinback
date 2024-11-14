@@ -4,7 +4,7 @@ export default {
         "myCountry": "United States"
     },
     "calendar": {
-        "eventDuration": 3600,
+        "eventDurationInMinutes": 60,
         "defaultIcon": "📍"
     }
 }; 

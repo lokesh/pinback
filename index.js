@@ -35,7 +35,7 @@ async function main() {
     // Upload all files
     await uploadFiles(calendarFiles);
     
-    console.log('👍 Updated calendar files in S3');
+    console.log('🟢 Calendars updated successfully');
   } catch (error) {
     console.error('🚨 Error Details:');
     console.error('- Message:', error.message);

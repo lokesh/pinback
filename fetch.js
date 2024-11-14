@@ -65,7 +65,7 @@ async function fetchCheckins() {
     checkins.push(...items);
   }
   
-  console.log(`✅ Fetched ${checkins.length} checkins`);
+  console.log(`📍 Fetched ${checkins.length} checkins`);
   return checkins;
 }
 
