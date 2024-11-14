@@ -50,10 +50,11 @@ curl -X POST "https://foursquare.com/oauth2/access_token" \
 8. The response should include your access token.
 9. Rename `.env.example` file to `.env` and populate `FOURSQUARE_OAUTH_TOKEN` with your access token.
 
-Run `npm run start` to test the fetching and calendar generation.
+Open up `config.js` and update the location and calendar settings to your liking and then run `npm run start` to test the fetching and calendar generation.
 
 > [!NOTE]
 > Rather than a single ICS file for all check-ins, we create multiple files for each 5-year period. This is to avoid hitting a possible 1MB file limit for subscribed calendars in Google Calendar -- the documentation on this is fuzzy. You will need to subscribe to each of the files individually in your calendar app.
+
 
 ### 2. Save the calendar files to AWS S3 🪣 
 
