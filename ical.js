@@ -1,22 +1,19 @@
 import { getIcon } from './categories.js';
+import config from './config.js';
 
 /* Depending on what you specify in the config variables, the location for calendar events
 will be formatted differently:
-    * 1. Check-in is in MY_CITY (e.g. San Francisco):
+    * 1. Check-in is in myCity (e.g. San Francisco):
     *    - Leave location string empty to keep calendar entries clean for local events
     * 
-    * 2. Check-in is in MY_COUNTRY but not in MY_CITY (e.g. within United States):
+    * 2. Check-in is in myCountry but not in myCity (e.g. within United States):
     *    - Format: "City, State"
     *    - Example: "Los Angeles, CA"
     * 
-    * 3. Check-in is in a different country than MY_COUNTRY:
+    * 3. Check-in is in a different country than myCountry:
     *    - Format: "City, Country"
     *    - Example: "Paris, France"
     */
-const CONFIG = {
-    MY_CITY: 'San Francisco',
-    MY_COUNTRY: 'United States'
-};
 
 // Helper function to format date to iCal format
 function formatDate(timestamp) {
@@ -46,7 +43,7 @@ function generateICalContent(checkins) {
 
     checkins.forEach(checkin => {
         const startDateTime = formatDate(checkin.createdAt);
-        const endDateTime = formatDate(checkin.createdAt + 3600);
+        const endDateTime = formatDate(checkin.createdAt + (config.calendar.eventDurationHours * 3600));
         const eventUID = generateUID();
         
         const primaryCategory = checkin.venue.categories[0]?.name || '';
@@ -55,10 +52,10 @@ function generateICalContent(checkins) {
         const location = checkin.venue.location;
         let locationString = '';
         
-        if (location.city === CONFIG.MY_CITY) {
+        if (location.city === config.location.myCity) {
             // Leave empty for default city
             locationString = '';
-        } else if (location.country === CONFIG.MY_COUNTRY) {
+        } else if (location.country === config.location.myCountry) {
             // City and state for domestic locations outside default city
             locationString = [location.city, location.state]
                 .filter(Boolean)

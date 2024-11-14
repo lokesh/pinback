@@ -1,3 +1,5 @@
+import config from './config.js';
+
 const categoryIcons = {
     // Dining & Drinking
     'Restaurant': '🍽️',
@@ -128,7 +130,7 @@ const categoryIcons = {
     'Embassy': '🏛️',
     
     // Catch-all
-    'default': '📍'
+    'default': config.calendar.eventDefaultEmoji
 };
 
 // Export the objects and function

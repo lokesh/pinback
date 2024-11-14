@@ -121,3 +121,16 @@ Common issues:
 - Calendar not updating? Most apps refresh only every 24-48 hours
 - GitHub Action failing? Check the Actions tab for error logs
 - Files not public? Double-check S3 bucket permissions
+
+
+### To-do
+
+Add Progress Indicators
+The current console logs are basic. Add a progress bar for long operations:
+Ask
+Copy
+Apply
+const spinner = ora('Fetching check-ins...').start();
+
+
+Add S3 bucket accessibility checks

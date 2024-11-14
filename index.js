@@ -37,7 +37,10 @@ async function main() {
     
     console.log('👍 Updated calendar files in S3');
   } catch (error) {
-    console.error('🚨 Error processing calendars:', error);
+    console.error('🚨 Error Details:');
+    console.error('- Message:', error.message);
+    console.error('- Type:', error.name);
+    console.error('- Stack:', error.stack);
     throw error;
   }
 }
