@@ -6,7 +6,7 @@
     <img src="./assets/calendar.png" alt="Calendar showing a week view with multiple events placed on each day" width="640">
 </p>
 
-[![Build and Deploy](https://github.com/lokesh/pinback/actions/workflows/daily.yml/badge.svg)](https://github.com/lokesh/pinback/actions/workflows/daily.yml)
+[![Build and Deploy](https://github.com/lokesh/pinback/actions/workflows/daily.yaml/badge.svg)](https://github.com/lokesh/pinback/actions/workflows/daily.yaml)
 
 This app does the following...
 1. Fetches your check-in data from Foursquare/Swarm API
