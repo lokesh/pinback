@@ -140,6 +140,5 @@ Common issues:
 
 ### To-do
 
-- [ ] Use Ora progress indicator
 - [ ] Simplify OAuth flow with helper script
 
