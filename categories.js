@@ -90,11 +90,9 @@ const categoryIcons = {
     'School': '🏫',
     'University': '🎓',
     'Library': '📚',
-    'Bookstore': '📚',
     
     // Services
     'Bank': '🏦',
-    'Post Office': '📮',
     'Hair Salon': '💇',
     'Spa': '💆',
     'Gym': '💪',
@@ -126,7 +124,6 @@ const categoryIcons = {
     'City Hall': '🏛️',
     'Police Station': '👮',
     'Fire Station': '🚒',
-    'Post Office': '📮',
     'Embassy': '🏛️',
     
     // Catch-all

@@ -32,6 +32,24 @@ function generateUID() {
     return 'id' + Math.random().toString(36).substr(2, 9);
 }
 
+// Format location string based on config rules
+function formatLocation(location) {
+    if (location.city === config.location.myCity) {
+        // Leave empty for default city
+        return '';
+    } else if (location.country === config.location.myCountry) {
+        // City and state for domestic locations outside default city
+        return [location.city, location.state]
+            .filter(Boolean)
+            .join(', ');
+    } else {
+        // City and country for international locations
+        return [location.city, location.country]
+            .filter(Boolean)
+            .join(', ');
+    }
+}
+
 // Create iCal content
 function generateICalContent(checkins) {
     let icalContent = [
@@ -54,24 +72,8 @@ function generateICalContent(checkins) {
         const primaryCategory = checkin.venue.categories[0]?.name || '';
         const categoryEmoji = getIcon(primaryCategory);
 
-        const location = checkin.venue.location;
-        let locationString = '';
+        const locationString = formatLocation(checkin.venue.location);
         
-        if (location.city === config.location.myCity) {
-            // Leave empty for default city
-            locationString = '';
-        } else if (location.country === config.location.myCountry) {
-            // City and state for domestic locations outside default city
-            locationString = [location.city, location.state]
-                .filter(Boolean)
-                .join(', ');
-        } else {
-            // City and country for international locations
-            locationString = [location.city, location.country]
-                .filter(Boolean)
-                .join(', ');
-        }
-
         icalContent = icalContent.concat([
             'BEGIN:VEVENT',
             `UID:${eventUID}`,

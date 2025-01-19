@@ -18,17 +18,22 @@ const AUTH_PARAMS = {
 const CHECKINS_URL = 'https://api.foursquare.com/v2/users/self/checkins';
 const LIMIT = 250;
 
+// Helper function to build API URL with params
+function buildApiUrl(endpoint, additionalParams = {}) {
+  const params = new URLSearchParams({
+    ...AUTH_PARAMS,
+    ...additionalParams
+  });
+  return `${endpoint}?${params}`;
+}
+
 /**
  * Fetches the total number of checkins for the authenticated user
  * Makes a single API call to get the checkins count
  * @returns {Promise<number>} Total number of checkins
  */
 async function fetchCheckinCount() {
-  const params = new URLSearchParams({
-    ...AUTH_PARAMS,
-  })
-
-  const resp = await fetch(`${CHECKINS_URL}?${new URLSearchParams(params)}`);
+  const resp = await fetch(buildApiUrl(CHECKINS_URL));
   const json = await resp.json();
   return json.response.checkins.count;
 }
@@ -39,13 +44,7 @@ async function fetchCheckinCount() {
  * @returns {Promise<Array>} Array of checkin objects from Foursquare
  */
 async function fetchCheckinBatch(offset = 0) {
-  const params = new URLSearchParams({
-    ...AUTH_PARAMS,
-    limit: LIMIT,
-    offset,
-  })
-
-  const resp = await fetch(`${CHECKINS_URL}?${new URLSearchParams(params)}`);
+  const resp = await fetch(buildApiUrl(CHECKINS_URL, { limit: LIMIT, offset }));
   const json = await resp.json();
   return json.response.checkins.items;
 }
